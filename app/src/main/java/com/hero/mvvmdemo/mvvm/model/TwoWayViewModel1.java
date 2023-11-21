@@ -1,7 +1,6 @@
 package com.hero.mvvmdemo.mvvm.model;
 
-import android.content.Context;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -15,11 +14,10 @@ import com.hero.mvvmdemo.mvvm.bean.LoginModel;
  * </pre>
  */
 public class TwoWayViewModel1 extends BaseObservable {
-    private Context context;
+    public static final String TAG = "TwoWayViewModel1";
     private LoginModel loginModel;
 
-    public TwoWayViewModel1(Context context) {
-        this.context = context;
+    public TwoWayViewModel1() {
         loginModel = new LoginModel("测试双向绑定");
     }
 
@@ -31,8 +29,8 @@ public class TwoWayViewModel1 extends BaseObservable {
     public void setUserName(String username) {
         if (username != null && !username.equals(loginModel.getUsername())) {
             loginModel.setUsername(username);
-            Toast.makeText(context, username, Toast.LENGTH_SHORT).show();
             notifyPropertyChanged(BR.userName);
+            Log.i(TAG, "setUserName: "+ username);
         }
     }
 }

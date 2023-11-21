@@ -1,7 +1,5 @@
 package com.hero.mvvmdemo.mvvm.model;
 
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.hero.mvvmdemo.mvvm.ObserMutableLiveData;

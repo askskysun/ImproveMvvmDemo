@@ -1,8 +1,9 @@
 package com.hero.mvvmdemo.mvvm;
 
+import android.os.Looper;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -35,8 +36,17 @@ public class ObserMutableLiveData<T> {
         mMutableLiveData.setValue(this.value);
     }
 
+    /**
+     * 当数据改变时需要调用下这个
+     */
     public void notifyLiveData() {
-        mMutableLiveData.setValue(this.value);
+        //主线程
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            mMutableLiveData.setValue(this.value);
+            return;
+        }
+        //子线程
+        mMutableLiveData.postValue(this.value);
     }
 
     @MainThread
