@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hero.mvvmdemo.mvvm.ObserMutableLiveData;
 import com.hero.mvvmdemo.mvvm.bean.LoginModel;
 
 /**
@@ -13,19 +14,25 @@ import com.hero.mvvmdemo.mvvm.bean.LoginModel;
  * Author by sunhaihong, Email 1910713921@qq.com, Date on 2023/11/20.
  */
 public class TwoWayViewModel2 extends ViewModel {
-    private ObservableField<LoginModel> studentObservableField;
+
+    private ObserMutableLiveData<LoginModel> loginModelObserLiveData;
 
     public TwoWayViewModel2() {
-        LoginModel loginModel = new LoginModel("双向绑定推荐");
-        studentObservableField = new ObservableField<>();
-        studentObservableField.set(loginModel);
+        LoginModel loginModel = new LoginModel("双向绑定推荐：姓名");
+        loginModelObserLiveData = new ObserMutableLiveData<>();
+        loginModelObserLiveData.set(loginModel);
     }
 
     public String getUsername() {
-        return studentObservableField.get().getUsername();
+        return loginModelObserLiveData.get().getUsername();
     }
 
     public void setUsername(String name) {
-        studentObservableField.get().setUsername(name);
+        loginModelObserLiveData.get().setUsername(name);
+        loginModelObserLiveData.notifyLiveData();
+    }
+
+    public ObserMutableLiveData<LoginModel> getLoginModelObserLiveData() {
+        return loginModelObserLiveData;
     }
 }

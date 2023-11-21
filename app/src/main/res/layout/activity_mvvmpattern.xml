@@ -8,10 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="handlers"
-            type="com.hero.mvvmdemo.mvvm.view.MVVMActivity1" />
-
-        <variable
             name="data"
             type="String" />
 
@@ -48,13 +44,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnToast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="@{handlers.onClickShowToastName}"
-                android:text="点击请求数据并Toast提示" />
-
             <EditText
                 android:id="@+id/et_testchange"
                 android:layout_width="wrap_content"
@@ -87,7 +76,8 @@
         <ProgressBar
             android:id="@+id/activity_viewmodel_pb"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
     </FrameLayout>
 

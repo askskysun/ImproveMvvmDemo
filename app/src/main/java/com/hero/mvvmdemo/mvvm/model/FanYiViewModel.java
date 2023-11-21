@@ -1,4 +1,4 @@
-package com.hero.mvvmdemo.mvvm.viewmodel;
+package com.hero.mvvmdemo.mvvm.model;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

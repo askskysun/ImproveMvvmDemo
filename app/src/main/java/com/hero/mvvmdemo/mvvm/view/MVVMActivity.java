@@ -3,28 +3,23 @@ package com.hero.mvvmdemo.mvvm.view;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hero.mvvmdemo.R;
 import com.hero.mvvmdemo.databinding.ActivityMvvmpatternBinding;
-import com.hero.mvvmdemo.mvvm.bean.LoginModel;
 import com.hero.mvvmdemo.mvvm.interfaces.Presenter;
 import com.hero.mvvmdemo.mvvm.model.TwoWayViewModel1;
 import com.hero.mvvmdemo.mvvm.model.TwoWayViewModel2;
-import com.hero.mvvmdemo.mvvm.viewmodel.FanYiViewModel;
+import com.hero.mvvmdemo.mvvm.model.FanYiViewModel;
 
 /**
  * View层
  */
-public class MVVMActivity1 extends AppCompatActivity {
-
-    private TextView tvData;
+public class MVVMActivity extends AppCompatActivity {
 
     private FanYiViewModel mFanYiViewModel;
     private TwoWayViewModel2 mTwoWayViewModel2;
@@ -34,7 +29,6 @@ public class MVVMActivity1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_mvvmpattern);
-        binding.setHandlers(this);
         //双向绑定的示例
         twoWayViewModel();
         //点击事件和网络请求的示例
@@ -61,6 +55,10 @@ public class MVVMActivity1 extends AppCompatActivity {
         ViewModelProvider viewModelProvider = new ViewModelProvider(this);
         //获取ViewModel实例
         mTwoWayViewModel2 = viewModelProvider.get(TwoWayViewModel2.class);
+        mTwoWayViewModel2.getLoginModelObserLiveData().observe(this, loginModel -> {
+            Toast.makeText(this, loginModel.getUsername(), Toast.LENGTH_SHORT).show();
+        });
+        binding.setTwoWayViewModel2(mTwoWayViewModel2);
     }
 
     /**
@@ -95,9 +93,5 @@ public class MVVMActivity1 extends AppCompatActivity {
             Log.d("ViewModelActivity", "观察接口请求aBoolean----:" + aBoolean);
             Log.d("ViewModelActivity", "观察接口请求线程----:" + Thread.currentThread().getName());
         });
-    }
-
-    public void onClickShowToastName(View view) {
-        Toast.makeText(this, tvData.getText().toString(), Toast.LENGTH_LONG).show();
     }
 }
