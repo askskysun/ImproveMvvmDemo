@@ -1,5 +1,7 @@
 package com.hero.mvvmdemo;
 
+import android.util.Log;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

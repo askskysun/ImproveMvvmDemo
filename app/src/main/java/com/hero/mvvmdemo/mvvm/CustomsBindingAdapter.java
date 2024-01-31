@@ -11,9 +11,11 @@ import com.squareup.picasso.Picasso;
 /**
  * <pre>
  * 自定义BindingAdapter
+ * https://www.jianshu.com/p/b93d5ab4494b
  * </pre>
  */
 public class CustomsBindingAdapter {
+    //定义了之后 app属性就多了 image, defaultImage
     @BindingAdapter(value = {"image", "defaultImage"}, requireAll = false)
     public static void setImage(ImageView imageView, String imageUrl, int defaultImageResource) {
         if (!TextUtils.isEmpty(imageUrl)) {

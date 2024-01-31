@@ -8,24 +8,16 @@
         <import type="android.view.View" />
 
         <variable
-            name="data"
-            type="String" />
+            name="translateBean"
+            type="com.hero.mvvmdemo.mvvm.bean.TranslateBean" />
 
         <variable
-            name="TwoWayViewModel1"
-            type="com.hero.mvvmdemo.mvvm.model.TwoWayViewModel1" />
-
-        <variable
-            name="TwoWayViewModel2"
-            type="com.hero.mvvmdemo.mvvm.model.TwoWayViewModel2" />
-
-        <variable
-            name="fanyiData"
-            type="String" />
+            name="mvvmViewModel"
+            type="com.hero.mvvmdemo.mvvm.viewmodel.TranslateViewModel" />
 
         <variable
             name="presenter"
-            type="com.hero.mvvmdemo.mvvm.interfaces.Presenter" />
+            type="com.hero.mvvmdemo.mvvm.interfaces.OnClickPresenter" />
 
         <variable
             name="imageUrl"
@@ -50,35 +42,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="3dp"
-                android:text="@={TwoWayViewModel1.userName}" />
+                android:text="@={translateBean.title}" />
 
-            <EditText
-                android:id="@+id/testchange_et2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="3dp"
-                android:text="@={TwoWayViewModel2.username}" />
+            <!-- 点击事件的命名和处理 DataBinding支持的写法
+            android:onClick="@{presenter.onClick()}" //1.方法引用
+            android:onClick="@{()->presenter.onClick()}" //2.lamda表达式
+            android:onClick="@{(view)->presenter.onClick(view)}" //3.lamda表达式
+            android:onClick="@{()->presenter.onClick(item)}"//4.带参数lamda表达式
+            android:onClick="@{(view)->presenter.onClick(view, item)}"//5.带参数lamda表达式 -->
 
             <TextView
-                android:id="@+id/click1_tv"
+                android:id="@+id/click_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                android:onClick="@{(view)->presenter.onClick(view)}"
+                android:text="@{translateBean.clickName}" />
+
+            <TextView
+                android:id="@+id/data_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:gravity="center"
-                android:onClick="@{(v)->presenter.onClick(v)}"
-                android:text="@{fanyiData}" />
-
-            <TextView
-                android:id="@+id/click2_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:gravity="center"
-                android:onClick="@{(v)->presenter.onClick(v)}"
-                android:text="点击了2" />
+                android:text="@{translateBean.data}" />
 
             <ImageView
-                android:id="@+id/iv_url"
+                android:id="@+id/url_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
@@ -88,7 +79,7 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/activity_viewmodel_pb"
+            android:id="@+id/progress_pb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
