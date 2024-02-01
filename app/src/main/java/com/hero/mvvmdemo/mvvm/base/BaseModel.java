@@ -8,6 +8,10 @@ import java.lang.ref.WeakReference;
  * </pre>
  */
 public abstract class BaseModel<I> {
+
+    /**
+     * 回调给ViewModel的接口
+     */
     protected WeakReference<I> iCallBackWeakRef;
 
     public BaseModel(I iCallBack) {
@@ -41,6 +45,7 @@ public abstract class BaseModel<I> {
 
     /**
      * 提供回收方法
+     * 子类可继承，处理取消请求、资源加载等
      */
     public void destory() {
         if (iCallBackWeakRef == null) {

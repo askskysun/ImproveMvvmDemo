@@ -1,15 +1,12 @@
 package com.hero.mvvmdemo.mvvm.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.hero.mvvmdemo.R;
 import com.hero.mvvmdemo.databinding.ActivityMvvmpatternBinding;
 import com.hero.mvvmdemo.mvvm.interfaces.OnClickPresenter;
@@ -33,14 +30,14 @@ public class MVVMActivity extends AppCompatActivity implements OnClickPresenter 
         binding.setPresenter(this);
 
         //获取ViewModelProvider实例
-        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
         //获取ViewModel实例
-        mvvmViewModel = viewModelProvider.get(TranslateViewModel.class);
+        mvvmViewModel = new ViewModelProvider(this).get(TranslateViewModel.class);
+        //AndroidViewModel使用此方法
+        //        mvvmViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(TranslateViewModel.class);
+
         mvvmViewModel.getmTranslateData().observe(this, translateData -> {
             Toast.makeText(this, "标题：" + translateData.getTitle(), Toast.LENGTH_SHORT).show();
             binding.setTranslateBean(translateData);
-            Log.d("ViewModelActivity", "接口请求s----:" + translateData.getData());
-            Log.d("ViewModelActivity", "接口请求线程----:" + Thread.currentThread().getName());
         });
 
         mvvmViewModel.getLoadingLiveData().observe(this, new Observer<Boolean>() {
@@ -48,8 +45,6 @@ public class MVVMActivity extends AppCompatActivity implements OnClickPresenter 
             public void onChanged(Boolean aBoolean) {
                 //控制UI的逻辑在activity中，不要在xml中
                 binding.progressPb.setVisibility(aBoolean != null && aBoolean ? View.VISIBLE : View.GONE);
-                Log.d("ViewModelActivity", "观察接口请求aBoolean----:" + aBoolean);
-                Log.d("ViewModelActivity", "观察接口请求线程----:" + Thread.currentThread().getName());
             }
         });
 

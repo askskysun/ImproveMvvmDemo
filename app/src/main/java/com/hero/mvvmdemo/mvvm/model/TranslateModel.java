@@ -1,6 +1,7 @@
 package com.hero.mvvmdemo.mvvm.model;
 
 import com.hero.mvvmdemo.mvvm.api.TranslateService;
+import com.hero.mvvmdemo.mvvm.base.BaseModel;
 import com.hero.mvvmdemo.mvvm.interfaces.OnTranslateCallBack;
 
 import java.io.IOException;
@@ -15,9 +16,8 @@ import retrofit2.Retrofit;
  * <pre>
  *
  * </pre>
- * Author by sunhaihong, Email 1910713921@qq.com, Date on 2024/1/30.
  */
-public class TranslateModel {
+public class TranslateModel extends BaseModel<OnTranslateCallBack> {
     /**
      * Retrofit模块 详解：https://blog.csdn.net/weixin_37730482/category_6875815.html
      */
@@ -25,12 +25,8 @@ public class TranslateModel {
     private TranslateService mTranslateService;
     private String mBaseUrl = "http://fanyi.youdao.com/";
 
-    public static TranslateModel newInstance() {
-        TranslateModel fragment = new TranslateModel();
-        return fragment;
-    }
-
-    public TranslateModel() {
+    public TranslateModel(OnTranslateCallBack onTranslateCallBack) {
+        super(onTranslateCallBack);
         //获取Retrofit对象
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(mBaseUrl)//设置BaseUrl 必须以'/'结尾
@@ -39,7 +35,7 @@ public class TranslateModel {
         mTranslateService = mRetrofit.create(TranslateService.class);
     }
 
-    public void getTranslateData(OnTranslateCallBack onTranslateCallBack) {
+    public void getTranslateData() {
         Call<ResponseBody> getCall = mTranslateService.getTranslateByGet();
         getCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -52,15 +48,15 @@ public class TranslateModel {
                         e.printStackTrace();
                     }
                 }
-                if (onTranslateCallBack != null) {
-                    onTranslateCallBack.onResponse(result);
+                if (!isCallBackDestory()) {
+                    getCallBack().onResponse(result);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if (onTranslateCallBack != null) {
-                    onTranslateCallBack.onFailure(t);
+                if (!isCallBackDestory()) {
+                    getCallBack().onFailure(t);
                 }
             }
         });
