@@ -20,7 +20,12 @@ public abstract class BaseAndroidViewModel<M extends BaseModel> extends AndroidV
 
     protected abstract M createModel();
 
-    public void destory(){
-        model.destory();
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (model != null) {
+            model.destory();
+        }
+        model = null;
     }
 }

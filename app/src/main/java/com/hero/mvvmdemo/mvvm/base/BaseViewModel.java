@@ -23,5 +23,6 @@ public abstract class BaseViewModel<M extends BaseModel> extends ViewModel {
         if (model != null) {
             model.destory();
         }
+        model= null;
     }
 }

@@ -55,7 +55,7 @@ public abstract class BaseModel<I> {
         I iCallBack = iCallBackWeakRef.get();
         if (iCallBack != null) {
             iCallBackWeakRef.clear();
-            iCallBackWeakRef = null;
         }
+        iCallBackWeakRef = null;
     }
 }
